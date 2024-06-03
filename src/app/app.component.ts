@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './shared/ui/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
-  template: `
-    <h1>Welcome to {{ title }}!</h1>
-
-    <router-outlet />
-  `,
-  styles: [],
+  template: `<div>
+    <div drawer>
+      <input id="drawer" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+        <dnd-navbar />
+        <router-outlet />
+      </div>
+    </div>
+  </div> `,
+  imports: [RouterOutlet, NavbarComponent],
 })
-export class AppComponent {
-  title = 'D&D 5E Tome Of Knowledge';
-}
+export class AppComponent {}
