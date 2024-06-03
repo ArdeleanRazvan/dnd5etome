@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
         <a class="h-auto" routerLink="/spells">
           <img
             class="w-20"
-            src="../assets/DnD-Spellbook-192px.png"
+            src="./assets/DnD-Spellbook-192px.png"
             alt="Should be spellbook icon..."
           />
         </a>
