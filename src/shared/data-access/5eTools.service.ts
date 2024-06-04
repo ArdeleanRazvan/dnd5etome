@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Spellbook } from '../interfaces/spellbook';
-import { EMPTY, catchError, exhaustMap, from, map } from 'rxjs';
+import { EMPTY, catchError, exhaustMap, from, map, of } from 'rxjs';
 import { SpellsResponse } from '../interfaces/spells-response';
 import { BooksData } from '../interfaces/booksdata.interface';
 
@@ -12,7 +12,7 @@ export class FiveEToolsService {
   httpClient = inject(HttpClient);
 
   public requestSpellbooks() {
-    return this.httpClient.get(`https://5e.tools/data/spells/index.json`).pipe(
+    /*return this.httpClient.get(`https://5e.tools/data/spells/index.json`).pipe(
       catchError((err) => {
         this.handleError(err);
         return EMPTY;
@@ -30,7 +30,19 @@ export class FiveEToolsService {
         );
         return spellbooks;
       }),
-    );
+    );*/
+
+    const spellbooks: Spellbook[] = [
+      {
+        name: "Player's Handbook",
+        id: 'PHB',
+        jsonFileName: 'spells-phb.json',
+        spells: [],
+        isSelected: false,
+        isLoaded: false,
+      },
+    ];
+    return of(spellbooks);
   }
 
   public requestGeneralBooksData() {

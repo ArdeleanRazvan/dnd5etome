@@ -6,6 +6,9 @@ import { SpellsService } from './data-access/spells.service';
   standalone: true,
   selector: 'dnd-spells',
   template: `
+    <p class="text-center text-lg font-bold text-brown-500">
+      Player's Handbook
+    </p>
     <div class="flex w-full justify-center">
       <dnd-spells-list
         class="container flex justify-center"
