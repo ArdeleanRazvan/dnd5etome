@@ -5,25 +5,24 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   selector: 'dnd-navbar',
   template: ` <div>
-    <div class="bg-brown-900 navbar">
+    <div class="navbar bg-brown-900">
       <div
-        class="navbar-start flex justify-start gap-1 hover:underline focus:underline"
+        class="navbar-start flex w-auto justify-start gap-1 hover:underline focus:underline"
       >
         <a class="h-auto" routerLink="/spells">
           <img
-            class="w-20"
+            class="w-14 sm:w-20"
             src="./assets/DnD-Spellbook-192px.png"
             alt="Should be spellbook icon..."
           />
         </a>
-        <a routerLink="/spells" class="text-brown-500 mb-4 text-3xl font-bold">
+        <a
+          routerLink="/spells"
+          class="mb-2 text-xl font-bold text-brown-500 sm:mb-4 sm:text-3xl"
+        >
           D&D 5e Tome
         </a>
       </div>
-      <div class="text-brown-500 navbar-center mb-4 text-lg font-medium italic">
-        🚧🚧Website under construction🚧🚧
-      </div>
-      <div class="navbar-end"></div>
     </div>
   </div>`,
   imports: [RouterLink],

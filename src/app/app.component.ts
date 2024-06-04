@@ -10,6 +10,11 @@ import { NavbarComponent } from './shared/ui/navbar.component';
       <input id="drawer" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content">
         <dnd-navbar />
+        <div
+          class="navbar-center mb-4 text-center text-lg font-medium italic text-brown-500"
+        >
+          🚧🚧Website under construction🚧🚧
+        </div>
         <router-outlet />
       </div>
     </div>
