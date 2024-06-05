@@ -41,6 +41,30 @@ export class FiveEToolsService {
         isSelected: false,
         isLoaded: false,
       },
+      {
+        name: "Xenethar's Guide to Everything",
+        id: 'XGE',
+        jsonFileName: 'spells-xge.json',
+        spells: [],
+        isSelected: false,
+        isLoaded: false,
+      },
+      {
+        name: "Tasha's Cauldron of Everything",
+        id: 'TCE',
+        jsonFileName: 'spells-tce.json',
+        spells: [],
+        isSelected: false,
+        isLoaded: false,
+      },
+      {
+        name: "Fizban's Treasury of Dragons",
+        id: 'FTD',
+        jsonFileName: 'spells-ftd.json',
+        spells: [],
+        isSelected: false,
+        isLoaded: false,
+      },
     ];
     return of(spellbooks);
   }

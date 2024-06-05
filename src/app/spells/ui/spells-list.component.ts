@@ -11,13 +11,15 @@ import { Spell } from '../../../shared/interfaces/spell';
           class="collapse join-item collapse-arrow border-2 border-brown-500"
         >
           <input type="checkbox" name="{{ spell.name }}" />
-
-          <div class="sm:text:xl text-md collapse-title font-medium">
-            <img
-              class="w-12"
-              [src]="getImageSourceForSpell(spell.school, spell.name)"
-            />
-            {{ spell.name }}
+          <div class="collapse-title">
+            <div class="flex justify-start">
+              <img
+                class="w-8"
+                src="./assets/spells/Spell_Evocation_EldritchBlast.webp"
+                alt=""
+              />
+              <p class="sm:text:xl text-md font-medium">{{ spell.name }}</p>
+            </div>
           </div>
           <div class="collapse-content">
             <p>Collapse Content</p>
@@ -30,7 +32,16 @@ import { Spell } from '../../../shared/interfaces/spell';
 export class SpellsListComponent {
   spells = input.required<Spell[]>();
   getImageSourceForSpell(schoolInitial: string, name: string): string {
-    const src = `../../assets/spells/Spell_${this.schools.find((school) => school.initial === schoolInitial)?.name}_${name.split(' ').join('')}.webp`;
+    const prefix = './assets/spells/Spell';
+    const schoolName = this.schools.find(
+      (school) => school.initial === schoolInitial,
+    )?.name;
+    const joinSpellName = name
+      .split(' ')
+      .map((word) => `${word[0].toUpperCase()}${word.substring(1)}`)
+      .join('');
+    const src = `${prefix}_${schoolName}_${joinSpellName}.webp`;
+
     return src;
   }
   schools = [
