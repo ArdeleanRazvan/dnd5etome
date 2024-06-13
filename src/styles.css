@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: "Alegreya";
+  src: url("./assets/fonts/Alegreya-Regular.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alegreya";
+  src: url("./assets/fonts/Alegreya-Italic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Alegreya";
+  src: url("./assets/fonts/Alegreya-Medium.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alegreya";
+  src: url("./assets/fonts/Alegreya-MediumItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Alegreya";
+  src: url("./assets/fonts/Alegreya-SemiBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alegreya";
+  src: url("./assets/fonts/Alegreya-SemiBoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Alegreya";
+  src: url("./assets/fonts/Alegreya-Bold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alegreya";
+  src: url("./assets/fonts/Alegreya-BoldItalic.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+}
