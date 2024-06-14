@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Spellbook } from '../../../shared/interfaces/spellbook';
-import { combineLatest, from, mergeMap, switchMap } from 'rxjs';
+import { combineLatest, from, mergeMap, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Spell } from '../../../shared/interfaces/spell';
 import { FiveEToolsService } from '../../../shared/data-access/5eTools.service';
@@ -46,7 +46,6 @@ export class SpellsService {
     }),
   );
 
-  //comm
   private spells$ = this.spellbooks$.pipe(
     mergeMap((spellbook) =>
       this.fiveEtoolsService.requestSpellsInBook(spellbook.jsonFileName),
@@ -62,15 +61,20 @@ export class SpellsService {
       })),
     );
 
-    this.spells$.pipe(takeUntilDestroyed()).subscribe((response) =>
-      this.state.update((state) => ({
-        ...state,
-        spellbooks: state.spellbooks.map((spellbook) =>
-          spellbook.id === response.spell[0].source
-            ? { ...spellbook, spells: response.spell }
-            : spellbook,
-        ),
-      })),
-    );
+    this.spells$
+      .pipe(
+        takeUntilDestroyed(),
+        tap((spell) => console.log(spell)),
+      )
+      .subscribe((response) =>
+        this.state.update((state) => ({
+          ...state,
+          spellbooks: state.spellbooks.map((spellbook) =>
+            spellbook.id === response.spell[0].source
+              ? { ...spellbook, spells: response.spell }
+              : spellbook,
+          ),
+        })),
+      );
   }
 }

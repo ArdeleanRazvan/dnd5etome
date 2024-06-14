@@ -1,5 +1,7 @@
 import { Component, input } from '@angular/core';
 import { Spell } from '../../../shared/interfaces/spell';
+import { SpellSchoolPipe } from '../../shared/pipes/spell-school.pipe';
+import { SpellSchool } from '../../../shared/interfaces/spell-school.interface';
 
 @Component({
   standalone: true,
@@ -14,12 +16,8 @@ import { Spell } from '../../../shared/interfaces/spell';
             <input type="checkbox" name="{{ spell.name }}" />
             <div class="collapse-title">
               <div class="flex flex-col">
-                <div class="flex">
-                  <img
-                    class="w-8"
-                    src="./assets/spells/Spell_Evocation_EldritchBlast.webp"
-                    alt=""
-                  />
+                <div class="flex gap-2">
+                  <img class="w-8" [src]="getImageSrc(spell)" alt="" />
                   <p class="sm:text:xl font-alegreya text-lg font-extrabold">
                     {{ spell.name }}
                   </p>
@@ -27,7 +25,8 @@ import { Spell } from '../../../shared/interfaces/spell';
               </div>
               <div>
                 <p class="text-md font-alegreya font-extrabold text-brown-200">
-                  Level 1 Evocation Spell
+                  {{ spell.level > 0 ? 'Level ' + spell.level : 'Cantrip' }}
+                  {{ spell.school | school: schools }} Spell
                 </p>
               </div>
             </div>
@@ -39,54 +38,34 @@ import { Spell } from '../../../shared/interfaces/spell';
       </div>
     </div>
   `,
+  imports: [SpellSchoolPipe],
 })
 export class SpellsListComponent {
   spells = input.required<Spell[]>();
-  getImageSourceForSpell(schoolInitial: string, name: string): string {
+
+  schools: Array<SpellSchool> = [
+    { initial: 'A', name: 'Abjuration' },
+    { initial: 'C', name: 'Conjuration' },
+    { initial: 'D', name: 'Divination' },
+    { initial: 'E', name: 'Enchantment' },
+    { initial: 'V', name: 'Evocation' },
+    { initial: 'I', name: 'Illusion' },
+    { initial: 'N', name: 'Necromancy' },
+    { initial: 'T', name: 'Transmutation' },
+  ];
+
+  getImageSrc(spell: Spell): string {
     const prefix = './assets/spells/Spell';
+
     const schoolName = this.schools.find(
-      (school) => school.initial === schoolInitial,
+      (school) => school.initial === spell.school,
     )?.name;
-    const joinSpellName = name
+
+    const joinSpellName = spell.name
       .split(' ')
       .map((word) => `${word[0].toUpperCase()}${word.substring(1)}`)
       .join('');
-    const src = `${prefix}_${schoolName}_${joinSpellName}.webp`;
 
-    return src;
+    return `${prefix}_${schoolName}_${joinSpellName}.webp`;
   }
-  schools = [
-    {
-      initial: 'A',
-      name: 'Abjuration',
-    },
-    {
-      initial: 'C',
-      name: 'Conjuration',
-    },
-    {
-      initial: 'D',
-      name: 'Divination',
-    },
-    {
-      initial: 'E',
-      name: 'Enchantment',
-    },
-    {
-      initial: 'V',
-      name: 'Evocation',
-    },
-    {
-      initial: 'I',
-      name: 'Illusion',
-    },
-    {
-      initial: 'N',
-      name: 'Necromancy',
-    },
-    {
-      initial: 'T',
-      name: 'Transmutation',
-    },
-  ];
 }
