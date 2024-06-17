@@ -18,6 +18,8 @@ export interface Spell {
   savingThrow: Array<string>; // saving throw used
   affectsCreatureType: Array<string>; //creatures affected by the spell
   damageInflict: Array<string>; // damage type inflicted
+  canSelectDamageType: boolean; // if spell can do different types of damage
+  damage: Array<Damage>; //array with damage types and values
   abilityCheck: Array<string>; // ability checks needed for spell
   meta: Meta; // prerequisites
   damageResist: Array<string>; // damage resists the spell gives
@@ -28,6 +30,12 @@ export interface Spell {
   otherSources: Array<Source>; // other sources
   damageVulnerable: Array<string>; // spells that give damage vulnerability
   additionalSources: Array<Source>; // other sources where the spell is found
+}
+
+export interface Damage {
+  type: string; // type of damage
+  value: string; // value in die rolls
+  conditional: boolean; // if DC saving throw is needed
 }
 
 interface Source {

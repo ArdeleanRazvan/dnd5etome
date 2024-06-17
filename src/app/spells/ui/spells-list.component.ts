@@ -7,7 +7,7 @@ import { SpellComponent } from './spell.component';
   selector: 'dnd-spells-list',
   template: `
     <div
-      class="join join-vertical m-1 flex w-80 bg-gradient-to-r from-amber-800 via-amber-400 to-amber-800 text-white"
+      class="join join-vertical m-1 flex w-96 bg-gradient-to-r from-amber-800 via-amber-400 to-amber-800 text-white"
     >
       <div class="mx-0.5 rounded-lg">
         @for (spell of spells(); track spell.name) {

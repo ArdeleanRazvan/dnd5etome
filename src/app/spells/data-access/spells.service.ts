@@ -2,7 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Spellbook } from '../../../shared/interfaces/spellbook';
 import { combineLatest, from, mergeMap, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Spell } from '../../../shared/interfaces/spell';
+import { Damage, Spell } from '../../../shared/interfaces/spell';
 import { FiveEToolsService } from '../../../shared/data-access/5eTools.service';
 
 export interface SpellsState {
@@ -64,17 +64,52 @@ export class SpellsService {
     this.spells$
       .pipe(
         takeUntilDestroyed(),
-        tap((spell) => console.log(spell)),
+        tap((spellbook) =>
+          console.log(spellbook.spell.filter((spell) => spell.damageInflict)),
+        ),
       )
       .subscribe((response) =>
         this.state.update((state) => ({
           ...state,
           spellbooks: state.spellbooks.map((spellbook) =>
             spellbook.id === response.spell[0].source
-              ? { ...spellbook, spells: response.spell }
+              ? {
+                  ...spellbook,
+                  spells: response.spell.map((spell) =>
+                    this.extractSpellDamage(spell),
+                  ),
+                }
               : spellbook,
           ),
         })),
       );
+  }
+
+  private extractSpellDamage(spell: Spell): Spell {
+    if (!spell.entries) return spell;
+
+    spell.damage = [];
+
+    spell.entries.forEach((entry) => {
+      if (typeof entry === 'string') {
+        const damagePattern = /\{@damage (\d+d\d+)\} (\w+) damage/g;
+        const damageMatches = entry.matchAll(damagePattern);
+        for (const match of damageMatches) {
+          const isDamageTypePresent = spell.damage.some(
+            (damage) => damage.type === match[2],
+          );
+
+          if (!isDamageTypePresent) {
+            spell.damage.push({
+              value: match[1],
+              type: match[2],
+              conditional: false,
+            });
+          }
+        }
+      }
+    });
+
+    return spell;
   }
 }
