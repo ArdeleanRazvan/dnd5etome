@@ -61,28 +61,21 @@ export class SpellsService {
       })),
     );
 
-    this.spells$
-      .pipe(
-        takeUntilDestroyed(),
-        tap((spellbook) =>
-          console.log(spellbook.spell.filter((spell) => spell.damageInflict)),
+    this.spells$.pipe(takeUntilDestroyed()).subscribe((response) =>
+      this.state.update((state) => ({
+        ...state,
+        spellbooks: state.spellbooks.map((spellbook) =>
+          spellbook.id === response.spell[0].source
+            ? {
+                ...spellbook,
+                spells: response.spell.map((spell) =>
+                  this.extractSpellDamage(spell),
+                ),
+              }
+            : spellbook,
         ),
-      )
-      .subscribe((response) =>
-        this.state.update((state) => ({
-          ...state,
-          spellbooks: state.spellbooks.map((spellbook) =>
-            spellbook.id === response.spell[0].source
-              ? {
-                  ...spellbook,
-                  spells: response.spell.map((spell) =>
-                    this.extractSpellDamage(spell),
-                  ),
-                }
-              : spellbook,
-          ),
-        })),
-      );
+      })),
+    );
   }
 
   private extractSpellDamage(spell: Spell): Spell {

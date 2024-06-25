@@ -81,8 +81,12 @@ export class SpellComponent {
     )?.name;
 
     const joinSpellName = spell.name
-      .split(' ')
-      .map((word) => `${word[0].toUpperCase()}${word.substring(1)}`)
+      .split(/[ \/'\,\-]/)
+      .map((word) =>
+        word.length > 1
+          ? `${word[0].toUpperCase()}${word.substring(1)}`
+          : `${word}`,
+      )
       .join('');
 
     return `${prefix}_${schoolName}_${joinSpellName}.webp`;
@@ -96,7 +100,8 @@ export class SpellComponent {
     const damageType =
       damage.type === 'bludgeoning' ||
       damage.type === 'slashing' ||
-      damage.type === 'piercing'
+      damage.type === 'piercing' ||
+      damage.type === 'extra'
         ? 'physical'
         : damage.type;
 
